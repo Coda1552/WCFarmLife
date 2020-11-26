@@ -2,7 +2,7 @@ package mod.coda.wcfarmlife.world.gen;
 
 import com.google.common.collect.ImmutableMap;
 import mod.coda.wcfarmlife.WCFarmLife;
-import mod.coda.wcfarmlife.init.WCFarmLifeFeatures;
+import mod.coda.wcfarmlife.init.WCFarmLifeStructures;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ChestTileEntity;
@@ -13,8 +13,11 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
+import net.minecraft.world.ISeedReader;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.feature.structure.StructureManager;
 import net.minecraft.world.gen.feature.structure.StructurePiece;
 import net.minecraft.world.gen.feature.structure.TemplateStructurePiece;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
@@ -43,7 +46,7 @@ public class TribullRanchPieces {
         private Rotation rotation;
 
         public Piece(TemplateManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
-            super(WCFarmLifeFeatures.TRIBULL_RANCH_PIECE, 0);
+            super(WCFarmLifeStructures.TRIBULL_RANCH_PIECE, 0);
             this.resourceLocation = resourceLocationIn;
             BlockPos blockpos = TribullRanchPieces.OFFSET.get(resourceLocation);
             this.templatePosition = pos.add(blockpos.getX(), blockpos.getY(), blockpos.getZ());
@@ -52,7 +55,7 @@ public class TribullRanchPieces {
         }
 
         public Piece(TemplateManager templateManagerIn, CompoundNBT tagCompound) {
-            super(WCFarmLifeFeatures.TRIBULL_RANCH_PIECE, tagCompound);
+            super(WCFarmLifeStructures.TRIBULL_RANCH_PIECE, tagCompound);
             this.resourceLocation = new ResourceLocation(tagCompound.getString("Template"));
             this.rotation = Rotation.valueOf(tagCompound.getString("Rot"));
             this.setupPiece(templateManagerIn);
@@ -73,7 +76,7 @@ public class TribullRanchPieces {
         }
 
         @Override
-        protected void handleDataMarker(String function, BlockPos pos, IWorld worldIn, Random rand, MutableBoundingBox sbb) {
+        protected void handleDataMarker(String function, BlockPos pos, IServerWorld worldIn, Random rand, MutableBoundingBox sbb) {
             if ("chest".equals(function)) {
                 worldIn.setBlockState(pos, Blocks.CHEST.getDefaultState(), 1);
                 TileEntity tileentity = worldIn.getTileEntity(pos);
@@ -84,12 +87,12 @@ public class TribullRanchPieces {
         }
 
         @Override
-        public boolean create(IWorld worldIn, ChunkGenerator<?> generator, Random randomIn, MutableBoundingBox structureBoundingBoxIn, ChunkPos chunkPos) {
+        public boolean func_230383_a_(ISeedReader worldIn, StructureManager p_230383_2_, ChunkGenerator generator, Random randomIn, MutableBoundingBox structureBoundingBoxIn, ChunkPos chunkPos, BlockPos p_230383_7_) {
             PlacementSettings placementsettings = (new PlacementSettings()).setRotation(this.rotation).setMirror(Mirror.NONE);
             BlockPos blockpos = TribullRanchPieces.OFFSET.get(this.resourceLocation);
-            this.templatePosition.add(Template.transformedBlockPos(placementsettings, new BlockPos(0 - blockpos.getX(), 03, 0 - blockpos.getZ())));
+            this.templatePosition.add(Template.transformedBlockPos(placementsettings, new BlockPos(-blockpos.getX(), 3, -blockpos.getZ())));
 
-            return super.create(worldIn, generator, randomIn, structureBoundingBoxIn, chunkPos);
+            return super.func_230383_a_(worldIn, p_230383_2_, generator, randomIn, structureBoundingBoxIn, chunkPos, p_230383_7_);
         }
     }
 }

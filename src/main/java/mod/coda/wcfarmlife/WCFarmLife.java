@@ -6,21 +6,21 @@ import mod.coda.wcfarmlife.entity.GalliraptorEntity;
 import mod.coda.wcfarmlife.init.WCFarmLifeEntities;
 import mod.coda.wcfarmlife.init.WCFarmLifeItems;
 import mod.coda.wcfarmlife.init.WCFarmLifeSounds;
-import mod.coda.wcfarmlife.world.gen.StructureGen;
-import mod.coda.wcfarmlife.init.WCFarmLifeFeatures;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
+import mod.coda.wcfarmlife.init.WCFarmLifeStructures;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.gen.Heightmap;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DeferredWorkQueue;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
+@Mod.EventBusSubscriber
 @Mod(WCFarmLife.MOD_ID)
 public class WCFarmLife {
     public static final String MOD_ID = "wcfarmlife";
@@ -28,17 +28,12 @@ public class WCFarmLife {
     public WCFarmLife() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::registerClient);
-        modEventBus.addListener(this::setup);
         modEventBus.addListener(this::registerCommon);
 
         WCFarmLifeItems.REGISTRY.register(modEventBus);
         WCFarmLifeEntities.REGISTRY.register(modEventBus);
-        WCFarmLifeFeatures.REGISTRY.register(modEventBus);
+        WCFarmLifeStructures.REGISTRY.register(modEventBus);
         WCFarmLifeSounds.REGISTRY.register(modEventBus);
-    }
-
-    public void setup(final FMLCommonSetupEvent event) {
-        DeferredWorkQueue.runLater(StructureGen::generateStructures);
     }
 
     private void registerCommon(FMLCommonSetupEvent event) {
@@ -52,6 +47,13 @@ public class WCFarmLife {
 
     private void registerClient(FMLClientSetupEvent event) {
         ClientEventHandler.init();
+    }
+
+    @SubscribeEvent
+    private static void setupBiomes(BiomeLoadingEvent event) {
+        if (event.getCategory() == Biome.Category.PLAINS) {
+            event.getGeneration().getStructures().add(() -> WCFarmLifeStructures.TRIBULL_RANCH.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
+        }
     }
 
     public final static ItemGroup GROUP = new ItemGroup(MOD_ID) {
