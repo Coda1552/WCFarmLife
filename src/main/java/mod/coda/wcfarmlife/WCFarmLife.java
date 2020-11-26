@@ -50,7 +50,7 @@ public class WCFarmLife {
     }
 
     @SubscribeEvent
-    private static void setupBiomes(BiomeLoadingEvent event) {
+    public static void setupBiomes(BiomeLoadingEvent event) {
         if (event.getCategory() == Biome.Category.PLAINS) {
             event.getGeneration().getStructures().add(() -> WCFarmLifeStructures.TRIBULL_RANCH.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG));
         }
