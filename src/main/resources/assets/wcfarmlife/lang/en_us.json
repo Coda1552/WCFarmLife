@@ -1,0 +1,20 @@
+{
+  "itemGroup.wcfarmlife": "Wings and Claws: Farm Life",
+
+  "item.wcfarmlife.tribull_shank": "Raw Tri-bull Shank",
+  "item.wcfarmlife.cooked_tribull_shank": "Cooked Tri-bull Shank",
+
+  "item.wcfarmlife.domestic_tribull_spawn_egg": "Domestic Tri-bull Spawn Egg",
+  "item.wcfarmlife.galliraptor_spawn_egg": "Galliraptor Spawn Egg",
+
+  "entity.wcfarmlife.domestic_tribull": "Domestic Tri-bull",
+  "entity.wcfarmlife.galliraptor": "Galliraptor",
+
+  "wcfarmlife.domestic_tribull.ambient": "Domestic Tri-bull grunts",
+  "wcfarmlife.domestic_tribull.hurt": "Domestic Tri-bull hurts",
+  "wcfarmlife.domestic_tribull.death": "Domestic Tri-bull dies",
+
+  "wcfarmlife.galliraptor.ambient": "Galliraptor clucks",
+  "wcfarmlife.galliraptor.hurt": "Galliraptor hurts",
+  "wcfarmlife.galliraptor.death": "Galliraptor dies"
+}
