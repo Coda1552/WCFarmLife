@@ -17,5 +17,7 @@ public class WCFarmLifeSounds {
     public static final RegistryObject<SoundEvent> GALLIRAPTOR_AMBIENT = REGISTRY.register("galliraptor_ambient", () -> new SoundEvent(new ResourceLocation(WCFarmLife.MOD_ID, "galliraptor.ambient")));
     public static final RegistryObject<SoundEvent> GALLIRAPTOR_HURT = REGISTRY.register("galliraptor_hurt", () -> new SoundEvent(new ResourceLocation(WCFarmLife.MOD_ID, "galliraptor.hurt")));
     public static final RegistryObject<SoundEvent> GALLIRAPTOR_DEATH = REGISTRY.register("galliraptor_death", () -> new SoundEvent(new ResourceLocation(WCFarmLife.MOD_ID, "galliraptor.death")));
+
+    public static final RegistryObject<SoundEvent> MUSIC_DISC_LIFE_ON_THE_FARM = REGISTRY.register("music_disc_life_on_the_farm", () -> new SoundEvent(new ResourceLocation(WCFarmLife.MOD_ID, "music_disc.life_on_the_farm")));
 }
 

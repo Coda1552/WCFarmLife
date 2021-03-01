@@ -3,9 +3,12 @@
 
   "item.wcfarmlife.tribull_shank": "Raw Tri-bull Shank",
   "item.wcfarmlife.cooked_tribull_shank": "Cooked Tri-bull Shank",
+  "item.wcfarmlife.music_disc_life_on_the_farm": "Music Disc",
 
   "item.wcfarmlife.domestic_tribull_spawn_egg": "Domestic Tri-bull Spawn Egg",
   "item.wcfarmlife.galliraptor_spawn_egg": "Galliraptor Spawn Egg",
+
+  "item.wcfarmlife.music_disc_life_on_the_farm.desc": "Mr. Esuoh - Life on the Farm",
 
   "entity.wcfarmlife.domestic_tribull": "Domestic Tri-bull",
   "entity.wcfarmlife.galliraptor": "Galliraptor",
