@@ -54,7 +54,6 @@ public class WCFarmLife {
         WCFarmLifeStructures.REGISTRY.register(modEventBus);
         WCFarmLifeSounds.REGISTRY.register(modEventBus);
 
-
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
         forgeBus.addListener(EventPriority.NORMAL, this::addDimensionalSpacing);
         forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
@@ -102,6 +101,9 @@ public class WCFarmLife {
     public void biomeModification(final BiomeLoadingEvent event) {
         if (event.getCategory() == Biome.Category.PLAINS) {
             event.getGeneration().getStructures().add(() -> WCFarmLifeConfiguredStructures.CONFIGURED_TRIBULL_RANCH);
+        }
+        if (event.getCategory() == Biome.Category.FOREST) {
+            event.getGeneration().getStructures().add(() -> WCFarmLifeConfiguredStructures.CONFIGURED_GREENHOUSE);
         }
     }
 

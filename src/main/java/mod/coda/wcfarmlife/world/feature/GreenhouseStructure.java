@@ -1,9 +1,15 @@
-package mod.coda.wcfarmlife.world.gen;
+package mod.coda.wcfarmlife.world.feature;
 
 import com.mojang.serialization.Codec;
 import mod.coda.wcfarmlife.WCFarmLife;
+import mod.coda.wcfarmlife.entity.GalliraptorEntity;
 import mod.coda.wcfarmlife.init.WCFarmLifeStructures;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.loot.LootTables;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.BarrelTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
@@ -29,9 +35,9 @@ import net.minecraft.world.gen.feature.template.TemplateManager;
 import java.util.List;
 import java.util.Random;
 
-public class TribullRanchStructure extends Structure<NoFeatureConfig> {
+public class GreenhouseStructure extends Structure<NoFeatureConfig> {
 
-    public TribullRanchStructure(Codec<NoFeatureConfig> p_i231977_1_) {
+    public GreenhouseStructure(Codec<NoFeatureConfig> p_i231977_1_) {
         super(p_i231977_1_);
     }
 
@@ -42,7 +48,7 @@ public class TribullRanchStructure extends Structure<NoFeatureConfig> {
 
     @Override
     public IStartFactory<NoFeatureConfig> getStartFactory() {
-        return TribullRanchStructure.Start::new;
+        return GreenhouseStructure.Start::new;
     }
 
     @Override
@@ -60,7 +66,7 @@ public class TribullRanchStructure extends Structure<NoFeatureConfig> {
             Rotation rotation = Rotation.values()[this.rand.nextInt(Rotation.values().length)];
             int x = (chunkX << 4) + 7;
             int z = (chunkZ << 4) + 7;
-            int surfaceY = Math.max(generator.getNoiseHeightMinusOne(x + 12, z + 12, Heightmap.Type.WORLD_SURFACE_WG) - 2, generator.getGroundHeight() - 4);
+            int surfaceY = Math.max(generator.getNoiseHeightMinusOne(x + 12, z + 12, Heightmap.Type.WORLD_SURFACE_WG), generator.getGroundHeight());
             BlockPos blockpos = new BlockPos(x, surfaceY, z);
             Piece.start(templateManagerIn, blockpos, rotation, this.components, this.rand);
             this.recalculateStructureSize();
@@ -72,7 +78,7 @@ public class TribullRanchStructure extends Structure<NoFeatureConfig> {
         private Rotation rotation;
 
         public Piece(TemplateManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
-            super(WCFarmLifeStructures.RUINS_PIECE_TYPE, 0);
+            super(WCFarmLifeStructures.GREENHOUSE_PIECE, 0);
             this.resourceLocation = resourceLocationIn;
             this.templatePosition = pos;
             this.rotation = rotationIn;
@@ -80,7 +86,7 @@ public class TribullRanchStructure extends Structure<NoFeatureConfig> {
         }
 
         public Piece(TemplateManager templateManagerIn, CompoundNBT tagCompound) {
-            super(WCFarmLifeStructures.RUINS_PIECE_TYPE, tagCompound);
+            super(WCFarmLifeStructures.GREENHOUSE_PIECE, tagCompound);
             this.resourceLocation = new ResourceLocation(tagCompound.getString("Template"));
             this.rotation = Rotation.valueOf(tagCompound.getString("Rot"));
             this.setupPiece(templateManagerIn);
@@ -89,9 +95,9 @@ public class TribullRanchStructure extends Structure<NoFeatureConfig> {
         public static void start(TemplateManager templateManager, BlockPos pos, Rotation rotation, List<StructurePiece> pieceList, Random random) {
             int x = pos.getX();
             int z = pos.getZ();
-            BlockPos rotationOffSet = new BlockPos(0, 0, 0).rotate(rotation);
+            BlockPos rotationOffSet = new BlockPos(0, 2, 0).rotate(rotation);
             BlockPos blockpos = rotationOffSet.add(x, pos.getY(), z);
-            pieceList.add(new Piece(templateManager, new ResourceLocation(WCFarmLife.MOD_ID, "tribull_ranch"), blockpos, rotation));
+            pieceList.add(new Piece(templateManager, new ResourceLocation(WCFarmLife.MOD_ID, "greenhouse"), blockpos, rotation));
         }
 
         private void setupPiece(TemplateManager templateManager) {
@@ -117,7 +123,19 @@ public class TribullRanchStructure extends Structure<NoFeatureConfig> {
 
         @Override
         protected void handleDataMarker(String function, BlockPos pos, IServerWorld worldIn, Random rand, MutableBoundingBox sbb) {
+            if ("galliraptor".equals(function)) {
+                worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
+                if (rand.nextInt(4) != 0) {
+                    GalliraptorEntity entity = this.entity.create(worldIn);
+                    if (entity != null) {
+                        if (rand.nextInt(5) == 0) entity.setGrowingAge(-24000);
+                        entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+                        entity.setVariant(rand.nextInt(5));
+                        entity.onInitialSpawn(worldIn, worldIn.getDifficultyForLocation(pos), SpawnReason.STRUCTURE, null, null);
+                        reader.addEntity(entity);
+                    }
+                }
+            }
         }
     }
-
 }

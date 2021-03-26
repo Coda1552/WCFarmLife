@@ -103,10 +103,9 @@ public class GalliraptorEntity extends AnimalEntity {
         return this.dataManager.get(VARIANT);
     }
 
-    private void setVariant(int variant) {
+    public void setVariant(int variant) {
         this.dataManager.set(VARIANT, variant);
     }
-
 
     public void livingTick() {
         super.livingTick();
