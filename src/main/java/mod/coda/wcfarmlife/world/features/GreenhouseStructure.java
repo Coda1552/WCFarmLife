@@ -1,19 +1,17 @@
-package mod.coda.wcfarmlife.world.feature;
+package mod.coda.wcfarmlife.world.features;
 
 import com.mojang.serialization.Codec;
 import mod.coda.wcfarmlife.WCFarmLife;
+import mod.coda.wcfarmlife.entities.GalliraptorEntity;
+import mod.coda.wcfarmlife.init.WCFarmLifeEntities;
 import mod.coda.wcfarmlife.init.WCFarmLifeStructures;
-import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.loot.LootTables;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.tileentity.BarrelTileEntity;
-import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Rotation;
+import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
@@ -31,13 +29,14 @@ import net.minecraft.world.gen.feature.template.BlockIgnoreStructureProcessor;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
 import java.util.Random;
 
-public class TribullRanchStructure extends Structure<NoFeatureConfig> {
+public class GreenhouseStructure extends Structure<NoFeatureConfig> {
 
-    public TribullRanchStructure(Codec<NoFeatureConfig> p_i231977_1_) {
+    public GreenhouseStructure(Codec<NoFeatureConfig> p_i231977_1_) {
         super(p_i231977_1_);
     }
 
@@ -48,7 +47,7 @@ public class TribullRanchStructure extends Structure<NoFeatureConfig> {
 
     @Override
     public IStartFactory<NoFeatureConfig> getStartFactory() {
-        return TribullRanchStructure.Start::new;
+        return GreenhouseStructure.Start::new;
     }
 
     @Override
@@ -78,7 +77,7 @@ public class TribullRanchStructure extends Structure<NoFeatureConfig> {
         private Rotation rotation;
 
         public Piece(TemplateManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
-            super(WCFarmLifeStructures.TRIBULL_RANCH_PIECE, 0);
+            super(WCFarmLifeStructures.GREENHOUSE_PIECE, 0);
             this.resourceLocation = resourceLocationIn;
             this.templatePosition = pos;
             this.rotation = rotationIn;
@@ -86,7 +85,7 @@ public class TribullRanchStructure extends Structure<NoFeatureConfig> {
         }
 
         public Piece(TemplateManager templateManagerIn, CompoundNBT tagCompound) {
-            super(WCFarmLifeStructures.TRIBULL_RANCH_PIECE, tagCompound);
+            super(WCFarmLifeStructures.GREENHOUSE_PIECE, tagCompound);
             this.resourceLocation = new ResourceLocation(tagCompound.getString("Template"));
             this.rotation = Rotation.valueOf(tagCompound.getString("Rot"));
             this.setupPiece(templateManagerIn);
@@ -97,7 +96,7 @@ public class TribullRanchStructure extends Structure<NoFeatureConfig> {
             int z = pos.getZ();
             BlockPos rotationOffSet = new BlockPos(0, 2, 0).rotate(rotation);
             BlockPos blockpos = rotationOffSet.add(x, pos.getY(), z);
-            pieceList.add(new Piece(templateManager, new ResourceLocation(WCFarmLife.MOD_ID, "tribull_ranch"), blockpos, rotation));
+            pieceList.add(new Piece(templateManager, new ResourceLocation(WCFarmLife.MOD_ID, "greenhouse"), blockpos, rotation));
         }
 
         private void setupPiece(TemplateManager templateManager) {
@@ -123,14 +122,17 @@ public class TribullRanchStructure extends Structure<NoFeatureConfig> {
 
         @Override
         protected void handleDataMarker(String function, BlockPos pos, IServerWorld worldIn, Random rand, MutableBoundingBox sbb) {
-            if ("barrel".equals(function)) {
+            if ("galliraptor".equals(function)) {
                 worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
-                TileEntity tileentity = worldIn.getTileEntity(pos.down());
-                if (tileentity instanceof BarrelTileEntity) {
-                    ((BarrelTileEntity) tileentity).setLootTable(LootTables.CHESTS_VILLAGE_VILLAGE_PLAINS_HOUSE, rand.nextLong());
+                GalliraptorEntity entity = WCFarmLifeEntities.GALLIRAPTOR.get().create(worldIn.getWorld());
+                if (entity != null) {
+                    if (rand.nextInt(5) == 0) entity.setGrowingAge(-24000);
+                    entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+                    entity.setVariant(rand.nextInt(5));
+                    entity.onInitialSpawn(worldIn, worldIn.getDifficultyForLocation(pos), SpawnReason.STRUCTURE, null, null);
+                    worldIn.addEntity(entity);
                 }
             }
         }
-
     }
 }

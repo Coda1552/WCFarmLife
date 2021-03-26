@@ -1,4 +1,4 @@
-package mod.coda.wcfarmlife.entity;
+package mod.coda.wcfarmlife.entities;
 
 import mod.coda.wcfarmlife.init.WCFarmLifeEntities;
 import mod.coda.wcfarmlife.init.WCFarmLifeSounds;
@@ -7,7 +7,6 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.AbstractSkeletonEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.passive.OcelotEntity;
@@ -27,7 +26,6 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -138,7 +136,7 @@ public class GalliraptorEntity extends AnimalEntity {
     }
 
     public GalliraptorEntity func_241840_a(ServerWorld world, AgeableEntity ageable) {
-        GalliraptorEntity entity = WCFarmLifeEntities.GALLIRAPTOR.create(this.world);
+        GalliraptorEntity entity = WCFarmLifeEntities.GALLIRAPTOR.get().create(this.world);
         int i = this.getVariant();
         if (this.rand.nextInt(5) != 0) {
             if (ageable instanceof GalliraptorEntity && this.rand.nextBoolean()) {

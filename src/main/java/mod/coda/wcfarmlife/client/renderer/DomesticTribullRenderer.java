@@ -2,7 +2,7 @@ package mod.coda.wcfarmlife.client.renderer;
 
 import mod.coda.wcfarmlife.WCFarmLife;
 import mod.coda.wcfarmlife.client.model.DomesticTribullModel;
-import mod.coda.wcfarmlife.entity.DomesticTribullEntity;
+import mod.coda.wcfarmlife.entities.DomesticTribullEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;

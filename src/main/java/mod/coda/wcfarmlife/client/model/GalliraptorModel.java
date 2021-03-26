@@ -1,7 +1,7 @@
 package mod.coda.wcfarmlife.client.model;
 
 import com.google.common.collect.ImmutableList;
-import mod.coda.wcfarmlife.entity.GalliraptorEntity;
+import mod.coda.wcfarmlife.entities.GalliraptorEntity;
 import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.Entity;

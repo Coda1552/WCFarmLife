@@ -6,5 +6,4 @@ modId="wcfarmlife" #mandatory
 version="${file.jarVersion}" #mandatory
 displayName="Wings and Claws: Farm Life" #mandatory
 credits="Tazz, Coda, Ninni" #optional
-description='''
-Placeholder description.'''
+description=''''''

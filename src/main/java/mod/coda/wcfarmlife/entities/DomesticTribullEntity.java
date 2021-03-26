@@ -1,6 +1,7 @@
-package mod.coda.wcfarmlife.entity;
+package mod.coda.wcfarmlife.entities;
 
 import mod.coda.wcfarmlife.init.WCFarmLifeEntities;
+import mod.coda.wcfarmlife.init.WCFarmLifeItems;
 import mod.coda.wcfarmlife.init.WCFarmLifeSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
@@ -16,6 +17,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -70,7 +72,12 @@ public class DomesticTribullEntity extends AnimalEntity {
     @Nullable
     @Override
     public DomesticTribullEntity func_241840_a(ServerWorld world, AgeableEntity ageable) {
-        return WCFarmLifeEntities.DOMESTIC_TRIBULL.create(this.world);
+        return WCFarmLifeEntities.DOMESTIC_TRIBULL.get().create(this.world);
+    }
+
+    @Override
+    public ItemStack getPickedResult(RayTraceResult target) {
+        return new ItemStack(WCFarmLifeItems.DOMESTIC_TRIBULL_SPAWN_EGG.get());
     }
 
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {

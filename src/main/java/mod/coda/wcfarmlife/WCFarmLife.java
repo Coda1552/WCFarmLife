@@ -3,8 +3,8 @@ package mod.coda.wcfarmlife;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
 import mod.coda.wcfarmlife.client.ClientEventHandler;
-import mod.coda.wcfarmlife.entity.DomesticTribullEntity;
-import mod.coda.wcfarmlife.entity.GalliraptorEntity;
+import mod.coda.wcfarmlife.entities.DomesticTribullEntity;
+import mod.coda.wcfarmlife.entities.GalliraptorEntity;
 import mod.coda.wcfarmlife.init.*;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.item.ItemGroup;
@@ -64,8 +64,8 @@ public class WCFarmLife {
     }
 
     private void registerEntityAttributes() {
-        GlobalEntityTypeAttributes.put(WCFarmLifeEntities.DOMESTIC_TRIBULL, DomesticTribullEntity.createAttributes().create());
-        GlobalEntityTypeAttributes.put(WCFarmLifeEntities.GALLIRAPTOR, GalliraptorEntity.createAttributes().create());
+        GlobalEntityTypeAttributes.put(WCFarmLifeEntities.DOMESTIC_TRIBULL.get(), DomesticTribullEntity.createAttributes().create());
+        GlobalEntityTypeAttributes.put(WCFarmLifeEntities.GALLIRAPTOR.get(), GalliraptorEntity.createAttributes().create());
     }
 
     private void registerClient(FMLClientSetupEvent event) {
@@ -75,7 +75,7 @@ public class WCFarmLife {
     public final static ItemGroup GROUP = new ItemGroup(MOD_ID) {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(WCFarmLifeItems.TRIBULL_SHANK);}
+            return new ItemStack(WCFarmLifeItems.TRIBULL_SHANK.get());}
     };
 
     public void setup(final FMLCommonSetupEvent event) {
@@ -86,13 +86,15 @@ public class WCFarmLife {
             WorldGenRegistries.NOISE_SETTINGS.getEntries().forEach(settings -> {
                 Map<Structure<?>, StructureSeparationSettings> structureMap = settings.getValue().getStructures().func_236195_a_();
 
-                if( structureMap instanceof ImmutableMap){
+                if (structureMap instanceof ImmutableMap) {
                     Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(structureMap);
                     tempMap.put(WCFarmLifeStructures.TRIBULL_RANCH.get(), DimensionStructuresSettings.field_236191_b_.get(WCFarmLifeStructures.TRIBULL_RANCH.get()));
+                    tempMap.put(WCFarmLifeStructures.GREENHOUSE.get(), DimensionStructuresSettings.field_236191_b_.get(WCFarmLifeStructures.GREENHOUSE.get()));
                     settings.getValue().getStructures().field_236193_d_ = tempMap;
                 }
-                else{
+                else {
                     structureMap.put(WCFarmLifeStructures.TRIBULL_RANCH.get(), DimensionStructuresSettings.field_236191_b_.get(WCFarmLifeStructures.TRIBULL_RANCH.get()));
+                    structureMap.put(WCFarmLifeStructures.GREENHOUSE.get(), DimensionStructuresSettings.field_236191_b_.get(WCFarmLifeStructures.GREENHOUSE.get()));
                 }
             });
         });

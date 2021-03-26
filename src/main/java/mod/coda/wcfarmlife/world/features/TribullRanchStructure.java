@@ -1,19 +1,14 @@
-package mod.coda.wcfarmlife.world.feature;
+package mod.coda.wcfarmlife.world.features;
 
 import com.mojang.serialization.Codec;
 import mod.coda.wcfarmlife.WCFarmLife;
-import mod.coda.wcfarmlife.entity.GalliraptorEntity;
 import mod.coda.wcfarmlife.init.WCFarmLifeStructures;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.loot.LootTables;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.BarrelTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SharedSeedRandom;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
@@ -35,9 +30,9 @@ import net.minecraft.world.gen.feature.template.TemplateManager;
 import java.util.List;
 import java.util.Random;
 
-public class GreenhouseStructure extends Structure<NoFeatureConfig> {
+public class TribullRanchStructure extends Structure<NoFeatureConfig> {
 
-    public GreenhouseStructure(Codec<NoFeatureConfig> p_i231977_1_) {
+    public TribullRanchStructure(Codec<NoFeatureConfig> p_i231977_1_) {
         super(p_i231977_1_);
     }
 
@@ -48,7 +43,7 @@ public class GreenhouseStructure extends Structure<NoFeatureConfig> {
 
     @Override
     public IStartFactory<NoFeatureConfig> getStartFactory() {
-        return GreenhouseStructure.Start::new;
+        return TribullRanchStructure.Start::new;
     }
 
     @Override
@@ -78,7 +73,7 @@ public class GreenhouseStructure extends Structure<NoFeatureConfig> {
         private Rotation rotation;
 
         public Piece(TemplateManager templateManagerIn, ResourceLocation resourceLocationIn, BlockPos pos, Rotation rotationIn) {
-            super(WCFarmLifeStructures.GREENHOUSE_PIECE, 0);
+            super(WCFarmLifeStructures.TRIBULL_RANCH_PIECE, 0);
             this.resourceLocation = resourceLocationIn;
             this.templatePosition = pos;
             this.rotation = rotationIn;
@@ -86,7 +81,7 @@ public class GreenhouseStructure extends Structure<NoFeatureConfig> {
         }
 
         public Piece(TemplateManager templateManagerIn, CompoundNBT tagCompound) {
-            super(WCFarmLifeStructures.GREENHOUSE_PIECE, tagCompound);
+            super(WCFarmLifeStructures.TRIBULL_RANCH_PIECE, tagCompound);
             this.resourceLocation = new ResourceLocation(tagCompound.getString("Template"));
             this.rotation = Rotation.valueOf(tagCompound.getString("Rot"));
             this.setupPiece(templateManagerIn);
@@ -97,7 +92,7 @@ public class GreenhouseStructure extends Structure<NoFeatureConfig> {
             int z = pos.getZ();
             BlockPos rotationOffSet = new BlockPos(0, 2, 0).rotate(rotation);
             BlockPos blockpos = rotationOffSet.add(x, pos.getY(), z);
-            pieceList.add(new Piece(templateManager, new ResourceLocation(WCFarmLife.MOD_ID, "greenhouse"), blockpos, rotation));
+            pieceList.add(new Piece(templateManager, new ResourceLocation(WCFarmLife.MOD_ID, "tribull_ranch"), blockpos, rotation));
         }
 
         private void setupPiece(TemplateManager templateManager) {
@@ -123,19 +118,14 @@ public class GreenhouseStructure extends Structure<NoFeatureConfig> {
 
         @Override
         protected void handleDataMarker(String function, BlockPos pos, IServerWorld worldIn, Random rand, MutableBoundingBox sbb) {
-            if ("galliraptor".equals(function)) {
+            if ("barrel".equals(function)) {
                 worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
-                if (rand.nextInt(4) != 0) {
-                    GalliraptorEntity entity = this.entity.create(worldIn);
-                    if (entity != null) {
-                        if (rand.nextInt(5) == 0) entity.setGrowingAge(-24000);
-                        entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-                        entity.setVariant(rand.nextInt(5));
-                        entity.onInitialSpawn(worldIn, worldIn.getDifficultyForLocation(pos), SpawnReason.STRUCTURE, null, null);
-                        reader.addEntity(entity);
-                    }
+                TileEntity tileentity = worldIn.getTileEntity(pos.down());
+                if (tileentity instanceof BarrelTileEntity) {
+                    ((BarrelTileEntity) tileentity).setLootTable(LootTables.CHESTS_VILLAGE_VILLAGE_PLAINS_HOUSE, rand.nextLong());
                 }
             }
         }
+
     }
 }

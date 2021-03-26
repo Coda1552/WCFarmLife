@@ -10,7 +10,9 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 public class ClientEventHandler {
     @OnlyIn(Dist.CLIENT)
     public static void init() {
-        RenderingRegistry.registerEntityRenderingHandler(WCFarmLifeEntities.DOMESTIC_TRIBULL, DomesticTribullRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(WCFarmLifeEntities.GALLIRAPTOR, GalliraptorRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(WCFarmLifeEntities.DOMESTIC_TRIBULL.get(), DomesticTribullRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(WCFarmLifeEntities.GALLIRAPTOR.get(), GalliraptorRenderer::new);
     }
+
+
 }

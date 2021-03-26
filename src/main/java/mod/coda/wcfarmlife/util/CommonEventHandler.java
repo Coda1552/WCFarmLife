@@ -1,7 +1,7 @@
 package mod.coda.wcfarmlife.util;
 
 import mod.coda.wcfarmlife.WCFarmLife;
-import mod.coda.wcfarmlife.entity.GalliraptorEntity;
+import mod.coda.wcfarmlife.entities.GalliraptorEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
