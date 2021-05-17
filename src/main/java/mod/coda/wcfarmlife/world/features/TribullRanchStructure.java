@@ -2,8 +2,12 @@ package mod.coda.wcfarmlife.world.features;
 
 import com.mojang.serialization.Codec;
 import mod.coda.wcfarmlife.WCFarmLife;
+import mod.coda.wcfarmlife.entities.DomesticTribullEntity;
+import mod.coda.wcfarmlife.entities.GalliraptorEntity;
+import mod.coda.wcfarmlife.init.WCFarmLifeEntities;
 import mod.coda.wcfarmlife.init.WCFarmLifeStructures;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.loot.LootTables;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.BarrelTileEntity;
@@ -125,7 +129,27 @@ public class TribullRanchStructure extends Structure<NoFeatureConfig> {
                     ((BarrelTileEntity) tileentity).setLootTable(LootTables.CHESTS_VILLAGE_VILLAGE_PLAINS_HOUSE, rand.nextLong());
                 }
             }
+            if ("adult".equals(function)) {
+                worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
+                DomesticTribullEntity entity = WCFarmLifeEntities.DOMESTIC_TRIBULL.get().create(worldIn.getWorld());
+                if (entity != null) {
+                    entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+                    entity.onInitialSpawn(worldIn, worldIn.getDifficultyForLocation(pos), SpawnReason.STRUCTURE, null, null);
+                    worldIn.addEntity(entity);
+                }
+            }
+            if ("child".equals(function)) {
+                worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
+                DomesticTribullEntity entity = WCFarmLifeEntities.DOMESTIC_TRIBULL.get().create(worldIn.getWorld());
+                if (entity != null) {
+                    if (rand.nextInt(3) == 0) {
+                        entity.setGrowingAge(-24000);
+                        entity.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+                        entity.onInitialSpawn(worldIn, worldIn.getDifficultyForLocation(pos), SpawnReason.STRUCTURE, null, null);
+                        worldIn.addEntity(entity);
+                    }
+                }
+            }
         }
-
     }
 }

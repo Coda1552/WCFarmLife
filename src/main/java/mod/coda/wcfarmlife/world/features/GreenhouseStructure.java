@@ -3,11 +3,13 @@ package mod.coda.wcfarmlife.world.features;
 import com.mojang.serialization.Codec;
 import mod.coda.wcfarmlife.WCFarmLife;
 import mod.coda.wcfarmlife.entities.GalliraptorEntity;
+import mod.coda.wcfarmlife.init.WCFarmLifeBlocks;
 import mod.coda.wcfarmlife.init.WCFarmLifeEntities;
 import mod.coda.wcfarmlife.init.WCFarmLifeStructures;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
@@ -132,6 +134,15 @@ public class GreenhouseStructure extends Structure<NoFeatureConfig> {
                     entity.onInitialSpawn(worldIn, worldIn.getDifficultyForLocation(pos), SpawnReason.STRUCTURE, null, null);
                     worldIn.addEntity(entity);
                 }
+            }
+            if ("flower".equals(function)) {
+                if (rand.nextFloat() < 0.2F) worldIn.setBlockState(pos, WCFarmLifeBlocks.PEACOCK_BURST_POPPY.get().getDefaultState(), 2);
+                else if (rand.nextFloat() < 0.2F) worldIn.setBlockState(pos, WCFarmLifeBlocks.ELECTRIC_BURST_POPPY.get().getDefaultState(), 2);
+                else if (rand.nextFloat() < 0.2F) worldIn.setBlockState(pos, WCFarmLifeBlocks.FANCY_BURST_POPPY.get().getDefaultState(), 2);
+                else if (rand.nextFloat() < 0.2F) worldIn.setBlockState(pos, WCFarmLifeBlocks.OLIVE_BURST_POPPY.get().getDefaultState(), 2);
+                else if (rand.nextFloat() < 0.2F) worldIn.setBlockState(pos, WCFarmLifeBlocks.RUSTY_BURST_POPPY.get().getDefaultState(), 2);
+                else if (rand.nextFloat() < 0.2F) worldIn.setBlockState(pos, WCFarmLifeBlocks.SUNSTREAK_BURST_POPPY.get().getDefaultState(), 2);
+                else worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
             }
         }
     }

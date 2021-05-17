@@ -2,10 +2,7 @@ package mod.coda.wcfarmlife.init;
 
 import mod.coda.wcfarmlife.WCFarmLife;
 import mod.coda.wcfarmlife.items.WCFarmLifeSpawnEggItem;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.MusicDiscItem;
-import net.minecraft.item.Rarity;
+import net.minecraft.item.*;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.fml.RegistryObject;
@@ -22,4 +19,10 @@ public class WCFarmLifeItems {
     public static final RegistryObject<Item> DOMESTIC_TRIBULL_SPAWN_EGG = REGISTRY.register("domestic_tribull_spawn_egg", () -> new WCFarmLifeSpawnEggItem(WCFarmLifeEntities.DOMESTIC_TRIBULL, 0x92b3b0, 0x738681, new Item.Properties().group(WCFarmLife.GROUP)));
     public static final RegistryObject<Item> GALLIRAPTOR_SPAWN_EGG = REGISTRY.register("galliraptor_spawn_egg", () -> new WCFarmLifeSpawnEggItem(WCFarmLifeEntities.GALLIRAPTOR, 0xefa83e, 0x182749, new Item.Properties().group(WCFarmLife.GROUP)));
 
+    public static final RegistryObject<Item> PEACOCK_BURST_POPPY = REGISTRY.register("peacock_burst_poppy", () -> new BlockItem(WCFarmLifeBlocks.PEACOCK_BURST_POPPY.get(), new Item.Properties().group(WCFarmLife.GROUP)));
+    public static final RegistryObject<Item> ELECTRIC_BURST_POPPY = REGISTRY.register("electric_burst_poppy", () -> new BlockItem(WCFarmLifeBlocks.ELECTRIC_BURST_POPPY.get(), new Item.Properties().group(WCFarmLife.GROUP)));
+    public static final RegistryObject<Item> FANCY_BURST_POPPY = REGISTRY.register("fancy_burst_poppy", () -> new BlockItem(WCFarmLifeBlocks.FANCY_BURST_POPPY.get(), new Item.Properties().group(WCFarmLife.GROUP)));
+    public static final RegistryObject<Item> OLIVE_BURST_POPPY = REGISTRY.register("olive_burst_poppy", () -> new BlockItem(WCFarmLifeBlocks.OLIVE_BURST_POPPY.get(), new Item.Properties().group(WCFarmLife.GROUP)));
+    public static final RegistryObject<Item> RUSTY_BURST_POPPY = REGISTRY.register("rusty_burst_poppy", () -> new BlockItem(WCFarmLifeBlocks.RUSTY_BURST_POPPY.get(), new Item.Properties().group(WCFarmLife.GROUP)));
+    public static final RegistryObject<Item> SUNSTREAK_BURST_POPPY = REGISTRY.register("sunstreak_burst_poppy", () -> new BlockItem(WCFarmLifeBlocks.SUNSTREAK_BURST_POPPY.get(), new Item.Properties().group(WCFarmLife.GROUP)));
 }

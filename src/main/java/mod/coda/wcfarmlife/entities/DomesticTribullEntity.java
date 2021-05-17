@@ -24,6 +24,7 @@ import net.minecraft.world.server.ServerWorld;
 import javax.annotation.Nullable;
 
 public class DomesticTribullEntity extends AnimalEntity {
+
     public DomesticTribullEntity(EntityType<? extends DomesticTribullEntity> type, World worldIn) {
         super(type, worldIn);
     }
@@ -81,6 +82,6 @@ public class DomesticTribullEntity extends AnimalEntity {
     }
 
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-        return this.isChild() ? sizeIn.height * 0.95F : 1.3F;
+        return this.isChild() ? 0.5F : 1.0F;
     }
 }

@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = WCFarmLife.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CommonEventHandler {
+
     @SubscribeEvent
     public static void spawnEntity(EntityJoinWorldEvent event) {
         Entity entity = event.getEntity();

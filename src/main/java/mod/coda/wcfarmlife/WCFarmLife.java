@@ -37,6 +37,8 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import static net.minecraft.block.ComposterBlock.registerCompostable;
+
 @Mod.EventBusSubscriber
 @Mod(WCFarmLife.MOD_ID)
 public class WCFarmLife {
@@ -49,6 +51,7 @@ public class WCFarmLife {
         modEventBus.addListener(this::registerCommon);
         modEventBus.addListener(this::setup);
 
+        WCFarmLifeBlocks.REGISTRY.register(modEventBus);
         WCFarmLifeItems.REGISTRY.register(modEventBus);
         WCFarmLifeEntities.REGISTRY.register(modEventBus);
         WCFarmLifeStructures.REGISTRY.register(modEventBus);
@@ -61,6 +64,13 @@ public class WCFarmLife {
 
     private void registerCommon(FMLCommonSetupEvent event) {
         registerEntityAttributes();
+        registerCompostable(0.3F, WCFarmLifeItems.PEACOCK_BURST_POPPY.get());
+        registerCompostable(0.3F, WCFarmLifeItems.ELECTRIC_BURST_POPPY.get());
+        registerCompostable(0.3F, WCFarmLifeItems.FANCY_BURST_POPPY.get());
+        registerCompostable(0.3F, WCFarmLifeItems.OLIVE_BURST_POPPY.get());
+        registerCompostable(0.3F, WCFarmLifeItems.RUSTY_BURST_POPPY.get());
+        registerCompostable(0.3F, WCFarmLifeItems.SUNSTREAK_BURST_POPPY.get());
+
     }
 
     private void registerEntityAttributes() {
